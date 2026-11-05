@@ -1,0 +1,10 @@
+{
+  "editor.fontSize": 20,
+  "terminal.integrated.fontSize": 20,
+  "editor.minimap.enabled": false,
+  "editor.wordWrap": "on",
+  "workbench.startupEditor": "none",
+  "terminal.integrated.cwd": "${workspaceFolder}",
+  "terminal.integrated.env.osx": { "PS1": "demo $ " },
+  "files.exclude": { "**/node_modules": true, "**/.DS_Store": true }
+}

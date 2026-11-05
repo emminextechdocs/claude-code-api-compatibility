@@ -1,0 +1,22 @@
+{
+  "name": "emminex-claude-code-api-compatibility",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24 <25" },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test --test-reporter=spec test/*.test.mjs",
+    "test:unit": "node --test --test-reporter=spec test/unit.test.mjs",
+    "test:schema": "node --test --test-reporter=spec test/schema.test.mjs",
+    "test:contract": "node --test --test-reporter=spec test/contract.test.mjs",
+    "client": "node scripts/export-events.mjs",
+    "demo:status": "node scripts/lesson.mjs status",
+    "demo:regress": "node scripts/lesson.mjs regress",
+    "demo:fix": "node scripts/lesson.mjs fix",
+    "lesson:add-contract": "node scripts/lesson.mjs add-contract",
+    "lesson:add-skill": "node scripts/lesson.mjs add-skill",
+    "lesson:add-ci": "node scripts/lesson.mjs add-ci"
+  },
+  "devDependencies": { "ajv": "8.20.0" }
+}
