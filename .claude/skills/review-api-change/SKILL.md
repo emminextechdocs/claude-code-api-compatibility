@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 Review the current working tree against the local `api-baseline` tag. If the tag is missing, report that and ask for the intended baseline; do not guess or fetch remotely.
 
-Read `docs/api-contract.md`, `docs/openapi.json`, `package.json`, the changed source and relevant tests. Use `git rev-parse api-baseline`, `git status --short`, and `git diff api-baseline -- src docs test package.json` to establish the comparison, including staged and unstaged changes. Inspect untracked test files shown by status separately: Git diff does not include their content.
+Read `docs/api-contract.md`, `docs/openapi.json`, `package.json`, the changed source and relevant tests, including `test/schema.test.mjs` and `test/helpers.mjs`. Open these files before concluding the review; if any cannot be inspected, mark that part of the review incomplete. Use `git rev-parse api-baseline`, `git status --short`, and `git diff api-baseline -- src docs test package.json` to establish the comparison, including staged and unstaged changes. Run these commands individually from the project root, so each permission decision and exit status is clear. Inspect untracked test files shown by status separately: Git diff does not include their content.
 
 Run `npm run test:unit`, `npm run test:schema`, and `npm run test:contract` separately from the project root. Keep the actual exit status and failure details for each. If the consumer test has not been installed, explicitly report that behavior coverage is missing; do not install it during review. Missing dependencies, permission denials, timeouts or startup problems make the affected check inconclusive. Do not equate those errors with a proven regression.
 
