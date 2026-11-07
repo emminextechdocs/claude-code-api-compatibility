@@ -4,29 +4,36 @@ A small, inspectable API compatibility lesson from [Emminex Techdocs](https://em
 
 The scenario is an intentional cursor-pagination regression. JSON response schemas still pass, while a consumer following the cursor receives duplicate records. A project skill helps review the change using actual test evidence. CI runs deterministic checks without a model account.
 
-## Requirements and quick start
+## Clone and run the completed example
 
 Use Node.js 24 (tested on 24.10.0), npm, and Git. Claude Code with a working account is needed only for the agent review. No database, Docker, external API or cloud account is required for local checks. Account usage terms apply to Claude; no model credentials belong in this repository.
 
 ```bash
+git clone https://github.com/emminextechdocs/claude-code-api-compatibility.git
+cd claude-code-api-compatibility
 npm ci
 npm run demo:status
 npm test
 npm run client
 ```
 
+On `main`, expect **14 passing tests** and **6 exported records with 6 unique IDs**.
+
+To reproduce the video from its ten-test starting point, use the [step-by-step follow-along guide](docs/follow-along.md). Start from `origin/walkthrough`; the completed branch already has the lesson files installed.
+
 The client starts and closes its own temporary local HTTP server. Tests use isolated loopback ports and also close them. `npm start` is available for manual requests on port 3000; stop it with Ctrl+C. A busy port causes an error rather than terminating another process.
 
 ## Versions of the lesson
 
-- `main` / `lesson-complete`: working implementation with consumer tests, review skill and CI installed.
+- `main`: completed working implementation with consumer tests, review skill, CI and current viewer instructions.
+- `lesson-complete`: saved snapshot of the completed implementation.
 - `api-baseline`: working implementation with the existing unit/schema tests. Prepared lesson assets are included but not active.
-- `walkthrough`: presenter starting branch based on `api-baseline`.
+- `walkthrough`: video starting point, with ten active tests and the reviewed lesson assets ready to install.
 
-For a fresh lesson walkthrough, use a separate clone and start a new branch at `api-baseline`. Do not switch branches over unsaved work.
+For a fresh lesson walkthrough, use a separate clone and create your own branch from `origin/walkthrough`. Do not switch branches over unsaved work.
 
 ```bash
-git switch -c my-walkthrough api-baseline
+git switch -c my-walkthrough origin/walkthrough
 npm ci
 npm test
 npm run client
@@ -44,7 +51,7 @@ Install the prepared project skill, inspect it, then launch Claude:
 
 ```bash
 npm run lesson:add-skill
-claude
+claude --setting-sources project --strict-mcp-config --mcp-config '{"mcpServers":{}}'
 ```
 
 Inside Claude Code, invoke `/review-api-change`. The skill reads the baseline and contract and runs each check separately. It reports evidence and suggests corrections; the lesson keeps source edits with the presenter. Preserve normal tool permission prompts.
@@ -71,6 +78,10 @@ The contract test compares against an independent fixed ID sequence. It does not
 Schema validation uses Ajv against the actual 200 response schema in `docs/openapi.json`. This is not a full OpenAPI conformance validator. The timestamp pattern checks shape, not every possible calendar date. Cross-request guarantees are described in [the contract](docs/api-contract.md) and asserted by the consumer test.
 
 ## CI and limits
+
+The video reruns an existing workflow for a prepared commit on `main`; it does not show a push of the local walkthrough edits. Fork the repository to run the workflow on your own commits.
+
+The recorded second review identifies a remaining coverage gap: no assertion directly requires `next_cursor` to be null on an exactly full final page. That follow-up is intentionally left unimplemented here to match the recording.
 
 The GitHub Actions job uses the locked dependency install and runs all three check groups. Its failure blocks merges only if configured as a required check in the repository rules. Passing local tests alone is not evidence of a successful hosted run.
 
