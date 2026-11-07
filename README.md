@@ -21,7 +21,7 @@ The client starts and closes its own temporary local HTTP server. Tests use isol
 
 - `main` / `lesson-complete`: working implementation with consumer tests, review skill and CI installed.
 - `api-baseline`: working implementation with the existing unit/schema tests. Prepared lesson assets are included but not active.
-- `recording`: presenter starting branch based on `api-baseline`.
+- `walkthrough`: presenter starting branch based on `api-baseline`.
 
 For a fresh lesson walkthrough, use a separate clone and start a new branch at `api-baseline`. Do not switch branches over unsaved work.
 
